@@ -31,44 +31,89 @@ R5: nombre, telefono y descuentos no pueden ser nulos ni negativos ni con caract
 --- 
 
 # Criterios de aceptacion
+-
 
-## */RF1/*
-CA1: crear nombre y telefono 
-CA2: verificar que no sean nulos o posean caracteres especiales
+## Registro de cliente
 
-## */RF2/*
-CA3: mostrar los objetos a la venta con su respectivo precio 
+  Escenario: Registrar cliente válido
+    Dado que el sistema necesita registrar un nuevo cliente
+    Cuando ingreso "Juan Pérez" como nombre y "123456789" como teléfono
+    Entonces el sistema registra exitosamente el cliente
 
-## */RF3/*
-CA4: calcular el precio total de todo el pedido y aplicar el descuento o el extra correspondiente
-CA5: verificar que el extra o el descuento realizado se aplique solo una vez a cada compra general (es decir, solo en el total)
-CA6: verificar si la cantidad ingresada por el usuario es > 0
-CA7: verificar que descuento no sea negativo
-CA8: verificar que los descuentos por cantidad de productos solo se apliquen cuando se agregen 5 unidades o mas de cada producto
+  Escenario: Nombre inválido
+    Dado que el sistema necesita registrar un nuevo cliente
+    Cuando ingreso "" como nombre y "123456789" como teléfono
+    Entonces el sistema muestra error "Nombre no puede estar vacío"
 
-## */RF4/*
-CA9: si suma del total del pedido > 60.000 aplicar descuento del 5% al total
-CA10: verificar que descuento no sea negativo
-CA11: verificar que descuento no se aplique mas de una sola vez o que no se aplique a cada producto por individual
+  Escenario: Teléfono inválido
+    Dado que el sistema necesita registrar un nuevo cliente
+    Cuando ingreso "Juan Pérez" como nombre y "" como teléfono
+    Entonces el sistema muestra error "Teléfono no puede estar vacío"
 
-## */RF5/*
-CA12: al confirmar el pedido no se puede alterar el pedido confirmado
-CA13: al confirmar el pedido debe de realizar todos los calculos y reunirlos en el ticket final
+## Selección de Productos
 
-## */RF6/*
-CA14: mostrar resumen de compra con datos de cliente, detalles de productos con precios, descuentos y exztras si aplican y total final
-CA15: verificar que resumen de compra no muestre mas de 1 vez el pedido o muestre valores negativos
+Escenario: Agregar camisas con descuento por volumen
+    Dado que estoy creando una nueva orden
+    Cuando agrego 6 camisas
+    Entonces el precio unitario es $3500
 
+  Escenario: Agregar pantalones con descuento por volumen
+    Dado que estoy creando una nueva orden
+    Cuando agrego 5 pantalones
+    Entonces el precio unitario es $5000
 
-## */Requerimiento opcional/*
-CA1.1: mostrar por pantalla una validacion para confirmar si el usuario desea o no el servicio expres
-CA1.2: si CA4 es true, agregar el 10% 
-CA1.3: validar que la respuesta dada no sea nula o de cualquier otro caracter 
+  Escenario: Agregar chaquetas con descuento por volumen
+    Dado que estoy creando una nueva orden
+    Cuando agrego 5 chaquetas
+    Entonces el precio unitario es $7500
 
-## */Requerimiento opcional 2/*
-CA2.1: la suma del 10% debe hacerce al total del pedido
-CA2.2: el extra solo se puede añadir 1 vez a la cuenta
+## Servicio Exprés
 
+ Escenario: Aplicar recargo de servicio exprés
+    Dado que tengo una orden con total bruto de $30000
+    Cuando selecciono servicio exprés
+    Entonces se agrega un recargo del 10% al total
+
+  Escenario: Servicio exprés con múltiples productos
+    Dado que tengo una orden con varios productos
+    Cuando selecciono servicio exprés
+    Entonces el recargo del 10% solo se aplica una vez al total
+
+## Descuentos y Totales
+
+Escenario: Aplicar descuento por total superior a $60000
+    Dado que tengo una orden con total de $70000
+    Cuando el sistema calcula los descuentos finales
+    Entonces se aplica un descuento del 5% al total final
+
+  Escenario: No aplicar descuento por total inferior a $60000
+    Dado que tengo una orden con total de $50000
+    Cuando el sistema calcula los descuentos finales
+    Entonces no se aplica ningún descuento adicional
+
+  Escenario: Combinación de descuentos
+    Dado que tengo una orden con total de $80000
+    Y he seleccionado servicio exprés
+    Cuando el sistema calcula todos los ajustes
+    Entonces primero aplica el recargo exprés y luego el descuento del 5%
+
+## Confirmación y Resumen
+
+  Escenario: Generar resumen completo
+    Dado que tengo una orden válida
+    Cuando confirmo la orden
+    Entonces el sistema muestra un resumen con:
+      - Datos del cliente
+      - Detalle de productos con precios
+      - Subtotales y totales
+      - Descuentos aplicados
+      - Recargos si corresponden
+      - Total final
+
+  Escenario: No permitir modificaciones después de confirmar
+    Dado que he confirmado una orden
+    Cuando intento modificar algún producto
+    Entonces el sistema muestra error "No se pueden realizar cambios en órdenes confirmadas
 ---
 
 # limite de diseño (clases que haran que esto funcione )
@@ -77,6 +122,7 @@ CA2.2: el extra solo se puede añadir 1 vez a la cuenta
 - 3. Pedido
 - 4. Producto
 - 5. Limoncito 
+- 6. app.java
 
 --- 
 
@@ -94,4 +140,3 @@ CA2.2: el extra solo se puede añadir 1 vez a la cuenta
 # Estructura general del proyecto 
 
 /El limoncito/
-
