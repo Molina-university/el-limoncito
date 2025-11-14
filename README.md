@@ -139,4 +139,29 @@ Escenario: Aplicar descuento por total superior a $60000
 
 # Estructura general del proyecto 
 
-/El limoncito/
+```
+EL-LIMONCITO/
+│
+├── assets/                      # Recursos del proyecto
+│   ├── image.png               # Imágenes
+│   ├── README.md               # Documentación de assets
+│   └── UML.jpg                 # Diagramas UML
+│
+├── bin/                        # Archivos compilados (.class)
+│
+├── src/                        # Código fuente
+│   ├── app/                    # Capa de aplicación
+│   │   └── App.java           # Clase principal
+│   │
+│   └── domain/                 # Capa de dominio (lógica de negocio)
+│       ├── Cliente.java       # Entidad Cliente
+│       ├── ImpPedido.java     # Implementación de Pedido
+│       ├── Pedido.java        # Entidad Pedido
+│       └── Producto.java      # Entidad Producto
+│
+├── view/                       # Capa de presentación
+│   └── Limoncito.java         # Interfaz de usuario
+│
+├── .gitignore                  # Archivos ignorados por Git
+└── README.md                   # Documentación principal
+```
