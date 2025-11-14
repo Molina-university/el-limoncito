@@ -9,7 +9,7 @@ public class App {
     public static void main(String[] args) {
         try {
             var service = new Limoncito();
-            var cliente = new Cliente("Ana", "3001234567");
+            var cliente = new Cliente("juan", 123456789);
             var pedido = service.crearPedido(cliente);
 
             service.agregarItem(pedido, Producto.CAMISA, 3);
